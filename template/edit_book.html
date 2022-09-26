@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="row g-0 app-auth-wrapper justify-content-center">
+    <div class="col-12 col-md-7 col-lg-6 auth-main-col text-center p-5">
+        <div class="d-flex flex-column align-content-end border py-3">
+            <div class="app-auth-body mx-auto">
+                <h2 class="auth-heading text-center mb-4">Edit {{book.book_name}}'s data</h2>
+                <div class="auth-form-container text-start mx-auto">
+                    {% for message in messages %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    <form class="auth-form auth-signup-form" method="POST">
+                        {% csrf_token %}
+                        <div class="email mb-3">
+                            <label class="sr-only" for="signup-email">Book Name</label>
+                            <input id="signup-name" name="book_name" type="text" class="form-control signup-name"
+                                placeholder="First name" required="required" value="{{book.book_name}}">
+                        </div>
+                        <div class="email mb-3">
+                            <label class="sr-only" for="signup-email">Author</label>
+                            <input id="signup-name" name="author" type="text" class="form-control signup-name"
+                                placeholder="Last name" required="required" value="{{book.author}}">
+                        </div>
+                        <div class="email mb-3">
+                            <label class="sr-only" for="signup-email">Price</label>
+                            <input id="signup-email" name="price" type="text" class="form-control signup-email"
+                                placeholder="Email" required="required" value="{{book.price}}">
+                        </div>
+                        <div class="email mb-3">
+                            <label class="sr-only" for="signup-email">Genre</label>
+                            <input id="signup-email" name="genre" type="text" class="form-control signup-email"
+                                placeholder="Email" required="required" value="{{book.genre}}">
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn app-btn-primary w-100 theme-btn mx-auto">Update</button>
+                        </div>
+                    </form>
+                    <!--//auth-form-->
+                </div>
+                <!--//auth-form-container-->
+
+
+
+            </div>
+            <!--//auth-body-->
+        </div>
+        <!--//flex-column-->
+    </div>
+
+
+</div>
+
+{% endblock content %}

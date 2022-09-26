@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}    
+    <div class="app-wrapper">
+	    
+	    <div class="app-content pt-3 p-md-3 p-lg-4">
+		    <div class="container-xl">
+			    
+			    <div class="row g-3 mb-4 align-items-center justify-content-between">
+				    <div class="col-auto">
+			            <h1 class="app-page-title mb-0">Orders</h1>
+				    </div>
+				    <div class="col-auto">
+					     <div class="page-utilities">
+						    <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
+							    <div class="col-auto">
+								    <form class="table-search-form row gx-1 align-items-center">
+					                    <div class="col-auto">
+					                        <input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="Search">
+					                    </div>
+					                    <div class="col-auto">
+					                        <button type="submit" class="btn app-btn-secondary">Search</button>
+					                    </div>
+					                </form>
+					                
+							    </div><!--//col-->
+						    </div><!--//row-->
+					    </div><!--//table-utilities-->
+				    </div><!--//col-auto-->
+			    </div><!--//row-->				
+				
+				<div class="tab-content" id="orders-table-tab-content">
+			        <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
+					    <div class="app-card app-card-orders-table shadow-sm mb-5">
+						    <div class="app-card-body">
+							    <div class="table-responsive">
+							        <table class="table app-table-hover mb-0 text-left">
+										<thead>
+											<tr>
+												<th class="cell">Order Id</th>
+												<th class="cell">Book</th>
+												{% if request.user.is_staff %}
+												<th class="cell">Customer</th>
+												{% else %}
+												<th class="cell">Action</th>
+												{% endif %}
+												<th class="cell">Date Issued</th>
+												<th class="cell">Due Date</th>
+												<th class="cell">Status</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for order in orders %}
+											<tr>
+												<td class="cell">#{{order.id}}</td>
+												<td class="cell"><span class="truncate">{{order.ordered_book.book_name}}</span></td>
+												{% if request.user.is_staff %}
+												<td class="cell">{{order.user.username}}</td>
+												{% else %}
+												<td class="cell"><a href="returnbook/{{order.id}}"><i class="fa-solid fa-arrow-rotate-left"></i> Return</a></td>
+												{% endif %}
+												<td class="cell"><span>{{order.date_ordered}}</span></td>
+												<td class="cell">{{order.due_date}}</td>
+												{% if order.returned %}
+												<td class="cell"><span class="badge bg-success">Returned</span></td>
+												{% else %}
+												<td class="cell"><span class="badge bg-danger">Not Returned</span></td>
+												{% endif %}
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+						        </div><!--//table-responsive-->
+						       
+						    </div><!--//app-card-body-->		
+						</div><!--//app-card-->
+						<nav class="app-pagination">
+							<ul class="pagination justify-content-center">
+								<li class="page-item disabled">
+									<a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+							    </li>
+								<li class="page-item active"><a class="page-link" href="#">1</a></li>
+								<li class="page-item"><a class="page-link" href="#">2</a></li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item">
+								    <a class="page-link" href="#">Next</a>
+								</li>
+							</ul>
+						</nav><!--//app-pagination-->
+			        </div><!--//tab-pane-->				
+			    
+		    </div><!--//container-fluid-->
+	    </div><!--//app-content--> 					
+{% endblock content %}
